@@ -123,7 +123,7 @@
             </spacer>
            </item>
            <item>
-            <widget class="QPushButton" name="pushButton">
+            <widget class="QPushButton" name="downtimeButton">
              <property name="text">
               <string>Время отдыха</string>
              </property>

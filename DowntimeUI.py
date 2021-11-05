@@ -14,17 +14,12 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_downTimeDialog(object):
     def setupUi(self, downTimeDialog):
         downTimeDialog.setObjectName("downTimeDialog")
-        downTimeDialog.resize(400, 300)
+        downTimeDialog.resize(392, 271)
         self.verticalLayout = QtWidgets.QVBoxLayout(downTimeDialog)
         self.verticalLayout.setObjectName("verticalLayout")
         self.titleLabel = QtWidgets.QLabel(downTimeDialog)
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        font.setBold(False)
-        font.setWeight(50)
-        self.titleLabel.setFont(font)
         self.titleLabel.setAutoFillBackground(False)
-        self.titleLabel.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.titleLabel.setAlignment(QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
         self.titleLabel.setObjectName("titleLabel")
         self.verticalLayout.addWidget(self.titleLabel)
         self.horizontalLayout = QtWidgets.QHBoxLayout()
@@ -50,13 +45,13 @@ class Ui_downTimeDialog(object):
         self.verticalLayout.addLayout(self.horizontalLayout)
         self.resetDownTimeButton = QtWidgets.QDialogButtonBox(downTimeDialog)
         self.resetDownTimeButton.setOrientation(QtCore.Qt.Horizontal)
-        self.resetDownTimeButton.setStandardButtons(QtWidgets.QDialogButtonBox.Apply|QtWidgets.QDialogButtonBox.Reset)
+        self.resetDownTimeButton.setStandardButtons(QtWidgets.QDialogButtonBox.Apply | QtWidgets.QDialogButtonBox.Reset)
         self.resetDownTimeButton.setObjectName("resetDownTimeButton")
         self.verticalLayout.addWidget(self.resetDownTimeButton)
 
         self.retranslateUi(downTimeDialog)
-        self.resetDownTimeButton.accepted.connect(downTimeDialog.accept) # type: ignore
-        self.resetDownTimeButton.rejected.connect(downTimeDialog.reject) # type: ignore
+        self.resetDownTimeButton.accepted.connect(downTimeDialog.accept)  # type: ignore
+        self.resetDownTimeButton.rejected.connect(downTimeDialog.reject)  # type: ignore
         QtCore.QMetaObject.connectSlotsByName(downTimeDialog)
 
     def retranslateUi(self, downTimeDialog):
