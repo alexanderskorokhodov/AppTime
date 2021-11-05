@@ -1,8 +1,11 @@
 import sys
-import sqlite3
+
+from PyQt5.QtGui import QIcon
+from PyQt5.QtWidgets import QApplication, QMainWindow, QDialog
+
 from AppTimeUI import Ui_AppTime
 from LimitsUI import Ui_LimitsDialog
-from PyQt5.QtWidgets import QApplication, QMainWindow, QDialog
+import win32
 
 
 class LimitsDialog(QDialog, Ui_LimitsDialog):
@@ -33,6 +36,7 @@ class MainWindow(QMainWindow, Ui_AppTime):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
+    app.setWindowIcon(QIcon("./appIcon.jpg"))
     ex = MainWindow()
     ex.show()
     sys.exit(app.exec_())
