@@ -24,11 +24,11 @@ class DownTimeDialog(QDialog, Ui_downTimeDialog):
     def apply_time(self):
         start_hours, start_minutes = self.startTimeEdit.time().hour(), self.startTimeEdit.time().minute()
         end_hours, end_minutes = self.endTimeEdit.time().hour(), self.endTimeEdit.time().minute()
-        if start_hours > end_hours or (start_hours == end_hours and start_minutes > end_minutes):
-            QMessageBox.about(self, "TimeError", "Введите коректный промежуток времени!")
-        else:
-            # save to db
-            self.close()
+        # if start_hours > end_hours or (start_hours == end_hours and start_minutes > end_minutes):
+        #    QMessageBox.about(self, "TimeError", "Введите коректный промежуток времени!")
+        # else:
+        # save to db
+        self.close()
 
     def closeEvent(self, a0):
         self._parent.show()
