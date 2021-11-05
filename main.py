@@ -15,9 +15,9 @@ class MainWindow(QMainWindow, Ui_AppTime):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
-        self.limitsButton.clicked.connect(self.showLimitsDialog)
+        self.limitsButton.clicked.connect(self.showlimitsdialog)
 
-    def showLimitsDialog(self):
+    def showlimitsdialog(self):
         dialog_window = LimitsDialog()
         dialog_window.show()
         self.hide()
