@@ -12,20 +12,26 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>666</width>
-    <height>666</height>
+    <width>670</width>
+    <height>734</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>666</width>
-    <height>666</height>
+    <width>670</width>
+    <height>725</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>666</width>
-    <height>666</height>
+    <width>536365</width>
+    <height>6575858</height>
+   </size>
+  </property>
+  <property name="baseSize">
+   <size>
+    <width>0</width>
+    <height>0</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -34,28 +40,31 @@
   <widget class="QWidget" name="centralwidget">
    <property name="minimumSize">
     <size>
-     <width>666</width>
-     <height>666</height>
+     <width>670</width>
+     <height>724</height>
     </size>
    </property>
    <property name="maximumSize">
     <size>
-     <width>666</width>
-     <height>666</height>
+     <width>690</width>
+     <height>724</height>
     </size>
    </property>
    <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>661</width>
-      <height>651</height>
+      <x>10</x>
+      <y>10</y>
+      <width>651</width>
+      <height>714</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="mainLayout">
+     <property name="spacing">
+      <number>10</number>
+     </property>
      <property name="bottomMargin">
-      <number>26</number>
+      <number>0</number>
      </property>
      <item>
       <layout class="QHBoxLayout" name="upLayout">
@@ -151,7 +160,7 @@
             </spacer>
            </item>
            <item>
-            <widget class="QPushButton" name="pushButton_2">
+            <widget class="QPushButton" name="limitsButton">
              <property name="text">
               <string>Лимиты</string>
              </property>
@@ -180,6 +189,12 @@
           <layout class="QHBoxLayout" name="chooseDateLayout">
            <item>
             <widget class="QLabel" name="featDate">
+             <property name="minimumSize">
+              <size>
+               <width>100</width>
+               <height>0</height>
+              </size>
+             </property>
              <property name="text">
               <string>10 октября 2021</string>
              </property>
@@ -187,6 +202,18 @@
            </item>
            <item>
             <widget class="QComboBox" name="weekdayBox">
+             <property name="minimumSize">
+              <size>
+               <width>90</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>90</width>
+               <height>16777215</height>
+              </size>
+             </property>
              <item>
               <property name="text">
                <string>day</string>
@@ -201,6 +228,18 @@
            </item>
            <item>
             <widget class="QPushButton" name="leftButton">
+             <property name="minimumSize">
+              <size>
+               <width>40</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>40</width>
+               <height>16777215</height>
+              </size>
+             </property>
              <property name="text">
               <string>&lt;</string>
              </property>
@@ -208,6 +247,18 @@
            </item>
            <item>
             <widget class="QPushButton" name="today">
+             <property name="minimumSize">
+              <size>
+               <width>31</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>75</width>
+               <height>16777215</height>
+              </size>
+             </property>
              <property name="text">
               <string>Today</string>
              </property>
@@ -215,6 +266,18 @@
            </item>
            <item>
             <widget class="QPushButton" name="rightButton">
+             <property name="minimumSize">
+              <size>
+               <width>40</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>40</width>
+               <height>16777215</height>
+              </size>
+             </property>
              <property name="text">
               <string>&gt;</string>
              </property>
@@ -226,8 +289,17 @@
           <layout class="QVBoxLayout" name="statsLayout">
            <item>
             <layout class="QHBoxLayout" name="generalStatsLayout">
+             <property name="spacing">
+              <number>0</number>
+             </property>
              <item>
               <widget class="QLabel" name="totalLabel">
+               <property name="minimumSize">
+                <size>
+                 <width>200</width>
+                 <height>0</height>
+                </size>
+               </property>
                <property name="text">
                 <string>Обшее время: </string>
                </property>
@@ -235,6 +307,12 @@
              </item>
              <item>
               <widget class="QLabel" name="differenceLabel">
+               <property name="minimumSize">
+                <size>
+                 <width>200</width>
+                 <height>0</height>
+                </size>
+               </property>
                <property name="text">
                 <string>Разница с прошлым днем: </string>
                </property>
@@ -243,7 +321,14 @@
             </layout>
            </item>
            <item>
-            <widget class="QTableWidget" name="statsTable"/>
+            <widget class="QTableWidget" name="statsTable">
+             <property name="minimumSize">
+              <size>
+               <width>500</width>
+               <height>300</height>
+              </size>
+             </property>
+            </widget>
            </item>
            <item>
             <layout class="QHBoxLayout" name="weekDays">
@@ -333,7 +418,7 @@
           <string>Время:</string>
          </property>
          <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          <set>Qt::AlignCenter</set>
          </property>
         </widget>
        </item>
@@ -346,8 +431,8 @@
        </property>
        <property name="maximumSize">
         <size>
-         <width>666</width>
-         <height>200</height>
+         <width>16777215</width>
+         <height>16777215</height>
         </size>
        </property>
       </widget>
