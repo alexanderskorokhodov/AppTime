@@ -54,6 +54,10 @@ class MainWindow(QMainWindow, Ui_AppTime):
         self.setupUi(self)
         self.limitsButton.clicked.connect(self.show_limits_dialog)
         self.downtimeButton.clicked.connect(self.show_downtime_dialog)
+        self.updateButton.clicked.connect(self.update_)
+
+    def update_(self):
+        pass  # update frames
 
     def show_limits_dialog(self):
         self.hide()

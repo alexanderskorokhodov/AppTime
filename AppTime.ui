@@ -12,13 +12,13 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>670</width>
+    <width>727</width>
     <height>734</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>670</width>
+    <width>700</width>
     <height>725</height>
    </size>
   </property>
@@ -40,13 +40,13 @@
   <widget class="QWidget" name="centralwidget">
    <property name="minimumSize">
     <size>
-     <width>670</width>
+     <width>721</width>
      <height>724</height>
     </size>
    </property>
    <property name="maximumSize">
     <size>
-     <width>690</width>
+     <width>721</width>
      <height>724</height>
     </size>
    </property>
@@ -55,7 +55,7 @@
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>651</width>
+      <width>696</width>
       <height>714</height>
      </rect>
     </property>
@@ -69,7 +69,7 @@
      <item>
       <layout class="QHBoxLayout" name="upLayout">
        <item>
-        <layout class="QVBoxLayout" name="userlayout">
+        <layout class="QVBoxLayout" name="buttonsLayout">
          <property name="leftMargin">
           <number>6</number>
          </property>
@@ -77,11 +77,24 @@
           <number>6</number>
          </property>
          <item>
-          <layout class="QHBoxLayout" name="profilePhotoLayout">
+          <layout class="QHBoxLayout" name="updateLayout">
            <item>
-            <widget class="QLabel" name="nameLabel">
+            <spacer name="horizontalSpacer">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="updateButton">
              <property name="text">
-              <string>your name</string>
+              <string>Обновить</string>
              </property>
             </widget>
            </item>
@@ -97,13 +110,6 @@
               </size>
              </property>
             </spacer>
-           </item>
-           <item>
-            <widget class="QToolButton" name="toolButton">
-             <property name="text">
-              <string>...</string>
-             </property>
-            </widget>
            </item>
           </layout>
          </item>
