@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>AppTime</class>
+ <widget class="QMainWindow" name="AppTime">
+  <property name="windowModality">
+   <enum>Qt::NonModal</enum>
+  </property>
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>666</width>
+    <height>666</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>666</width>
+    <height>666</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>666</width>
+    <height>666</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>AppTime</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <property name="minimumSize">
+    <size>
+     <width>666</width>
+     <height>666</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>666</width>
+     <height>666</height>
+    </size>
+   </property>
+   <widget class="QWidget" name="verticalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>661</width>
+      <height>651</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="mainLayout">
+     <property name="bottomMargin">
+      <number>26</number>
+     </property>
+     <item>
+      <layout class="QHBoxLayout" name="upLayout">
+       <item>
+        <layout class="QVBoxLayout" name="userlayout">
+         <property name="leftMargin">
+          <number>6</number>
+         </property>
+         <property name="rightMargin">
+          <number>6</number>
+         </property>
+         <item>
+          <layout class="QHBoxLayout" name="profilePhotoLayout">
+           <item>
+            <widget class="QLabel" name="nameLabel">
+             <property name="text">
+              <string>your name</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_2">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QToolButton" name="toolButton">
+             <property name="text">
+              <string>...</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="downtimeLayout">
+           <item>
+            <spacer name="horizontalSpacer_6">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton">
+             <property name="text">
+              <string>Время отдыха</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_7">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="limitsLayout">
+           <item>
+            <spacer name="horizontalSpacer_8">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_2">
+             <property name="text">
+              <string>Лимиты</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_9">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="day_layout">
+         <item>
+          <layout class="QHBoxLayout" name="chooseDateLayout">
+           <item>
+            <widget class="QLabel" name="featDate">
+             <property name="text">
+              <string>10 октября 2021</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QComboBox" name="weekdayBox">
+             <item>
+              <property name="text">
+               <string>day</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>week</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="leftButton">
+             <property name="text">
+              <string>&lt;</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="today">
+             <property name="text">
+              <string>Today</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="rightButton">
+             <property name="text">
+              <string>&gt;</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="statsLayout">
+           <item>
+            <layout class="QHBoxLayout" name="generalStatsLayout">
+             <item>
+              <widget class="QLabel" name="totalLabel">
+               <property name="text">
+                <string>Обшее время: </string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="differenceLabel">
+               <property name="text">
+                <string>Разница с прошлым днем: </string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="QTableWidget" name="statsTable"/>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="weekDays">
+             <item>
+              <widget class="QLabel" name="mondayLabel">
+               <property name="text">
+                <string>пон</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="tuesdayLabel">
+               <property name="text">
+                <string>втр</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="wednesdayLabel">
+               <property name="text">
+                <string>сре</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="thursdayLabel">
+               <property name="text">
+                <string>чет</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="fridayLabel">
+               <property name="text">
+                <string>пят</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="saturdayLabel">
+               <property name="text">
+                <string>суб</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="sundayLabel">
+               <property name="text">
+                <string>вос</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="showLayout">
+       <item>
+        <widget class="QLabel" name="showLabel">
+         <property name="text">
+          <string>Показать:</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="appCatBox">
+         <item>
+          <property name="text">
+           <string>Приложения</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Категории</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="timeShowLabel">
+         <property name="text">
+          <string>Время:</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QListWidget" name="appsTimeTable">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>666</width>
+         <height>200</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
