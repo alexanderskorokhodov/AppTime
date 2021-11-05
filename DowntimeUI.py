@@ -19,7 +19,7 @@ class Ui_downTimeDialog(object):
         self.verticalLayout.setObjectName("verticalLayout")
         self.titleLabel = QtWidgets.QLabel(downTimeDialog)
         self.titleLabel.setAutoFillBackground(False)
-        self.titleLabel.setAlignment(QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
+        self.titleLabel.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.titleLabel.setObjectName("titleLabel")
         self.verticalLayout.addWidget(self.titleLabel)
         self.horizontalLayout = QtWidgets.QHBoxLayout()
@@ -43,15 +43,19 @@ class Ui_downTimeDialog(object):
         spacerItem2 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout.addItem(spacerItem2)
         self.verticalLayout.addLayout(self.horizontalLayout)
-        self.resetDownTimeButton = QtWidgets.QDialogButtonBox(downTimeDialog)
-        self.resetDownTimeButton.setOrientation(QtCore.Qt.Horizontal)
-        self.resetDownTimeButton.setStandardButtons(QtWidgets.QDialogButtonBox.Apply | QtWidgets.QDialogButtonBox.Reset)
-        self.resetDownTimeButton.setObjectName("resetDownTimeButton")
-        self.verticalLayout.addWidget(self.resetDownTimeButton)
+        self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+        self.resetTimeButton = QtWidgets.QPushButton(downTimeDialog)
+        self.resetTimeButton.setObjectName("resetTimeButton")
+        self.horizontalLayout_2.addWidget(self.resetTimeButton)
+        spacerItem3 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_2.addItem(spacerItem3)
+        self.applyTimeButton = QtWidgets.QPushButton(downTimeDialog)
+        self.applyTimeButton.setObjectName("applyTimeButton")
+        self.horizontalLayout_2.addWidget(self.applyTimeButton)
+        self.verticalLayout.addLayout(self.horizontalLayout_2)
 
         self.retranslateUi(downTimeDialog)
-        self.resetDownTimeButton.accepted.connect(downTimeDialog.accept)  # type: ignore
-        self.resetDownTimeButton.rejected.connect(downTimeDialog.reject)  # type: ignore
         QtCore.QMetaObject.connectSlotsByName(downTimeDialog)
 
     def retranslateUi(self, downTimeDialog):
@@ -60,3 +64,5 @@ class Ui_downTimeDialog(object):
         self.titleLabel.setText(_translate("downTimeDialog", "Настройка времени сна"))
         self.startLabel.setText(_translate("downTimeDialog", "Старт:"))
         self.endLabel.setText(_translate("downTimeDialog", "Конец:"))
+        self.resetTimeButton.setText(_translate("downTimeDialog", "Reset"))
+        self.applyTimeButton.setText(_translate("downTimeDialog", "Apply"))
