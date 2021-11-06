@@ -12,7 +12,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>727</width>
+    <width>721</width>
     <height>734</height>
    </rect>
   </property>
@@ -249,11 +249,14 @@
             </layout>
            </item>
            <item>
-            <widget class="QTableWidget" name="statsTable">
+            <widget class="QGraphicsView" name="graphicsView">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
              <property name="minimumSize">
               <size>
-               <width>500</width>
-               <height>300</height>
+               <width>400</width>
+               <height>250</height>
               </size>
              </property>
             </widget>
@@ -340,16 +343,6 @@
          </item>
         </widget>
        </item>
-       <item>
-        <widget class="QLabel" name="timeShowLabel">
-         <property name="text">
-          <string>Время:</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
       </layout>
      </item>
      <item>
@@ -366,6 +359,9 @@
        <property name="layoutDirection">
         <enum>Qt::LeftToRight</enum>
        </property>
+       <property name="lineWidth">
+        <number>1</number>
+       </property>
        <property name="alternatingRowColors">
         <bool>false</bool>
        </property>
@@ -379,10 +375,13 @@
         <bool>false</bool>
        </attribute>
        <attribute name="headerDefaultSectionSize">
-        <number>350</number>
+        <number>340</number>
        </attribute>
        <attribute name="headerHighlightSections">
         <bool>false</bool>
+       </attribute>
+       <attribute name="headerMinimumSectionSize">
+        <number>340</number>
        </attribute>
        <column>
         <property name="text">

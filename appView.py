@@ -96,8 +96,10 @@ class MainWindow(QMainWindow, Ui_AppTime):
         minutes = int(for_day // 60 - hours * 60)
         if hours:
             self.totalLabel.setText(f"Всего: {hours} ч. {minutes} мин.")
-        else:
+        elif minutes:
             self.totalLabel.setText(f"Всего: {minutes} мин.")
+        else:
+            self.totalLabel.setText(f"Всего: {int(for_day - hours * 3600 - minutes * 60)} сек.")
         self.appsTimeTable.clear()
         apps_list_usage = []
         for item in reversed(sorted(apps_usage.items(), key=lambda x: (x[1], x[0]))):
@@ -106,8 +108,10 @@ class MainWindow(QMainWindow, Ui_AppTime):
             minutes = int(total_time // 60 - hours * 60)
             if hours:
                 total_time = f"Всего: {hours} ч. {minutes} мин."
-            else:
+            elif minutes:
                 total_time = f"Всего: {minutes} мин."
+            else:
+                total_time = f"Всего: {int(total_time - hours * 3600 - minutes * 60)} сек."
             print(app_name, total_time)
             element = QTreeWidgetItem(self.appsTimeTable)
             element.setText(0, app_name)
@@ -119,10 +123,12 @@ class MainWindow(QMainWindow, Ui_AppTime):
         self.featDate.setText(self.chosenDate.strftime('%d %B %Y'))
         # QMessageBox.about(self, "Update", "It's up to date")
         if self.weekdayBox.currentText() == 'day':
-            app_usage = self.get_day_info(self.chosenDate)
-            self.show_data(app_usage)
+            apps_usage = self.get_day_info(self.chosenDate)
+        else:
+            total_week, apps_usage = self.get_week_info(self.chosenDate)
+            print(total_week, apps_usage)
+        self.show_data(apps_usage)
 
-        pass  # update frames
 
     def show_limits_dialog(self):
         self.setEnabled(False)
@@ -149,6 +155,32 @@ class MainWindow(QMainWindow, Ui_AppTime):
             if this_day_app_usage:
                 day_apps_usage[this_day_app_usage[0]] = this_day_app_usage[1]
         return day_apps_usage
+
+
+    def get_week_info(self, day):
+        monday = day - datetime.timedelta(days=day.weekday())
+        total_week = []
+        apps_usage = {}
+        for delta in range(7):
+            total_week.append(0)
+            current_data = monday + datetime.timedelta(days=delta)
+            day_id = self.connection.cursor().execute(
+                f"""SELECT id FROM days WHERE day_name='{current_data.strftime("%Y-%m-%d")}'""").fetchone()
+            if not day_id:
+                continue
+            day_id = day_id[0]
+            app_time_ids = self.connection.cursor().execute(
+                f"""SELECT app_time_id FROM apps_time WHERE day_id={day_id}""").fetchall()
+            for app_time_id in app_time_ids:
+                this_day_app_usage = self.connection.cursor().execute(
+                    f"""SELECT app_name, time FROM app_time WHERE id={app_time_id[0]}""").fetchone()
+                if this_day_app_usage:
+                    apps_usage[this_day_app_usage[0]] = \
+                        this_day_app_usage[1] if this_day_app_usage[0] not in apps_usage \
+                            else this_day_app_usage[this_day_app_usage[0]] + this_day_app_usage[1]
+                    total_week[-1] += this_day_app_usage[1]
+        return total_week, apps_usage
+
 
     def closeEvent(self, a0) -> None:
         self.connection.close()
