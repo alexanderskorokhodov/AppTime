@@ -25,13 +25,12 @@ class DownTimeDialog(QDialog, Ui_downTimeDialog):
         start_hours, start_minutes = self.startTimeEdit.time().hour(), self.startTimeEdit.time().minute()
         end_hours, end_minutes = self.endTimeEdit.time().hour(), self.endTimeEdit.time().minute()
         # if start_hours > end_hours or (start_hours == end_hours and start_minutes > end_minutes):
-        #    QMessageBox.about(self, "TimeError", "Введите коректный промежуток времени!")
         # else:
         # save to db
         self.close()
 
     def closeEvent(self, a0):
-        self._parent.show()
+        self._parent.setEnabled(True)
 
 
 class LimitsDialog(QDialog, Ui_LimitsDialog):
@@ -45,7 +44,7 @@ class LimitsDialog(QDialog, Ui_LimitsDialog):
         self.close()
 
     def closeEvent(self, a0):
-        self._parent.show()
+        self._parent.setEnabled(True)
 
 
 class MainWindow(QMainWindow, Ui_AppTime):
@@ -57,15 +56,16 @@ class MainWindow(QMainWindow, Ui_AppTime):
         self.updateButton.clicked.connect(self.update_)
 
     def update_(self):
+        QMessageBox.about(self, "Update", "It's already up to date")
         pass  # update frames
 
     def show_limits_dialog(self):
-        self.hide()
+        self.setEnabled(False)
         dialog_window = LimitsDialog(self)
         dialog_window.exec_()
 
     def show_downtime_dialog(self):
-        self.hide()
+        self.setEnabled(False)
         dialog_window = DownTimeDialog(self)
         dialog_window.exec_()
 
