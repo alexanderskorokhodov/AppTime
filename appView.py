@@ -8,6 +8,8 @@ from AppTimeUI import Ui_AppTime
 from LimitsUI import Ui_LimitsDialog
 from DowntimeUI import Ui_downTimeDialog
 
+import datetime
+
 
 class DownTimeDialog(QDialog, Ui_downTimeDialog):
     def __init__(self, parent=None):
@@ -38,6 +40,8 @@ class LimitsDialog(QDialog, Ui_LimitsDialog):
         self._parent = parent
         super().__init__(parent)
         self.setupUi(self)
+        # get limits from db
+
         self.okLimitsButton.clicked.connect(self.ok_pressed)
 
     def ok_pressed(self):
@@ -51,12 +55,40 @@ class MainWindow(QMainWindow, Ui_AppTime):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
+        self.chosenDate = datetime.date.today()
+        self.featDate.setText(self.chosenDate.strftime('%d %B %Y'))
         self.limitsButton.clicked.connect(self.show_limits_dialog)
         self.downtimeButton.clicked.connect(self.show_downtime_dialog)
-        self.updateButton.clicked.connect(self.update_)
+        self.updateButton.clicked.connect(
+            lambda: QMessageBox.about(self, "Update", "It's up to date") and self.update_())
+        self.todayButton.clicked.connect(self.today_button_clicked)
+        self.leftButton.clicked.connect(self.left_button_clicked)
+        self.rightButton.clicked.connect(self.right_button_clicked)
+
+    def left_button_clicked(self):
+        if self.weekdayBox.currentText() == 'day':
+            self.chosenDate -= datetime.timedelta(days=1)
+            self.update_()
+        else:
+            self.chosenDate -= datetime.timedelta(days=7)
+            self.update_()
+
+    def right_button_clicked(self):
+        if self.weekdayBox.currentData() == 'day':
+            if self.chosenDate != datetime.date.today():
+                self.chosenDate += datetime.timedelta(days=1)
+                self.update_()
+        else:
+            self.chosenDate = min(datetime.timedelta(days=7) + self.chosenDate, datetime.date.today())
+            self.update_()
+
+    def today_button_clicked(self):
+        self.chosenDate = datetime.date.today()
+        self.update_()
 
     def update_(self):
-        QMessageBox.about(self, "Update", "It's already up to date")
+        self.featDate.setText(self.chosenDate.strftime('%d %B %Y'))
+        # QMessageBox.about(self, "Update", "It's up to date")
         pass  # update frames
 
     def show_limits_dialog(self):

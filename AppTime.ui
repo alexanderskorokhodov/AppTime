@@ -252,7 +252,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="today">
+            <widget class="QPushButton" name="todayButton">
              <property name="minimumSize">
               <size>
                <width>31</width>
