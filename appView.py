@@ -94,9 +94,12 @@ class MainWindow(QMainWindow, Ui_AppTime):
         qp = QPainter()
         qp.begin(self)
         # qp.setBrush(QColor(255, 255, 255))
-        qp.setBrush(QColor(162, 167, 207))
         if self.total_week:
             for day in range(7):
+                if day == self.chosenDate.weekday():
+                    qp.setBrush(QColor(26, 36, 117))
+                else:
+                    qp.setBrush(QColor(162, 167, 207))
                 qp.drawRect(200 + day * 70 + 5, 350, 60, -self.total_week[day])
         qp.end()
 
