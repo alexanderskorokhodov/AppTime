@@ -100,7 +100,7 @@ class Ui_AppTime(object):
         self.differenceLabel.setObjectName("differenceLabel")
         self.generalStatsLayout.addWidget(self.differenceLabel)
         self.statsLayout.addLayout(self.generalStatsLayout)
-        self.graphicsView = QtWidgets.QGraphicsView(self.verticalLayoutWidget)
+        self.graphicsView = PlotWidget(self.verticalLayoutWidget)
         self.graphicsView.setEnabled(True)
         self.graphicsView.setMinimumSize(QtCore.QSize(400, 250))
         self.graphicsView.setObjectName("graphicsView")
@@ -188,3 +188,4 @@ class Ui_AppTime(object):
         self.appCatBox.setItemText(1, _translate("AppTime", "Категории"))
         self.appsTimeTable.headerItem().setText(0, _translate("AppTime", "Название"))
         self.appsTimeTable.headerItem().setText(1, _translate("AppTime", "Время"))
+from pyqtgraph import PlotWidget

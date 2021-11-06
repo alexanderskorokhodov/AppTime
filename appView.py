@@ -28,8 +28,6 @@ class DownTimeDialog(QDialog, Ui_downTimeDialog):
     def apply_time(self):
         start_hours, start_minutes = self.startTimeEdit.time().hour(), self.startTimeEdit.time().minute()
         end_hours, end_minutes = self.endTimeEdit.time().hour(), self.endTimeEdit.time().minute()
-        # if start_hours > end_hours or (start_hours == end_hours and start_minutes > end_minutes):
-        # else:
         # save to db
         self.close()
 
@@ -90,7 +88,7 @@ class MainWindow(QMainWindow, Ui_AppTime):
         self.chosenDate = datetime.date.today()
         self.update_window()
 
-    def show_data(self, apps_usage):
+    def show_data(self, apps_usage, total_week):
         for_day = sum(apps_usage.values())
         hours = int(for_day // 3600)
         minutes = int(for_day // 60 - hours * 60)
@@ -122,12 +120,10 @@ class MainWindow(QMainWindow, Ui_AppTime):
     def update_window(self):
         self.featDate.setText(self.chosenDate.strftime('%d %B %Y'))
         # QMessageBox.about(self, "Update", "It's up to date")
+        total_week, apps_usage = self.get_week_info(self.chosenDate)
         if self.weekdayBox.currentText() == 'day':
             apps_usage = self.get_day_info(self.chosenDate)
-        else:
-            total_week, apps_usage = self.get_week_info(self.chosenDate)
-            print(total_week, apps_usage)
-        self.show_data(apps_usage)
+        self.show_data(apps_usage, total_week)
 
     def show_limits_dialog(self):
         self.setEnabled(False)
@@ -181,6 +177,24 @@ class MainWindow(QMainWindow, Ui_AppTime):
 
     def closeEvent(self, a0) -> None:
         self.connection.close()
+
+
+def process_week_data(total_week):
+    upper_bound = max(total_week) * 1.25
+    coefficient = upper_bound / 250
+    total_week = list(map(lambda x: int(x * coefficient), total_week))
+    return total_week
+
+
+def get_week_plot(total_week):
+    total_week = process_week_data(total_week)
+    x = [coord for coord in range(12, 502)]
+    y = []
+    for day in range(7):
+        y.extend([0 for _ in range(10)])
+        y.extend([total_week[day] for _ in range(50)])
+        y.extend([0 for _ in range(10)])
+    return x, y
 
 
 if __name__ == '__main__':
