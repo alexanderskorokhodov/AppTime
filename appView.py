@@ -62,8 +62,7 @@ class MainWindow(QMainWindow, Ui_AppTime):
         self.featDate.setText(self.chosenDate.strftime('%d %B %Y'))
         self.limitsButton.clicked.connect(self.show_limits_dialog)
         self.downtimeButton.clicked.connect(self.show_downtime_dialog)
-        self.updateButton.clicked.connect(
-            lambda: self.update_window() or QMessageBox.about(self, "Update", "It's up to date"))
+        self.updateButton.clicked.connect(self.update_window)
         self.todayButton.clicked.connect(self.today_button_clicked)
         self.leftButton.clicked.connect(self.left_button_clicked)
         self.rightButton.clicked.connect(self.right_button_clicked)
