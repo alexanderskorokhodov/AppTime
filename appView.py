@@ -67,6 +67,7 @@ class MainWindow(QMainWindow, Ui_AppTime):
         self.todayButton.clicked.connect(self.today_button_clicked)
         self.leftButton.clicked.connect(self.left_button_clicked)
         self.rightButton.clicked.connect(self.right_button_clicked)
+        self.update_()
 
     def left_button_clicked(self):
         if self.weekdayBox.currentText() == 'day':
