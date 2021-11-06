@@ -3,7 +3,8 @@ import sys
 
 from PyQt5.QtCore import QTime, pyqtSlot
 from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QApplication, QMainWindow, QDialog, QErrorMessage, QMessageBox, QHBoxLayout, QLabel, QTreeWidgetItem
+from PyQt5.QtWidgets import QApplication, QMainWindow, QDialog, QErrorMessage, QMessageBox, QHBoxLayout, QLabel, \
+    QTreeWidgetItem
 
 from AppTimeUI import Ui_AppTime
 from LimitsUI import Ui_LimitsDialog
@@ -112,7 +113,6 @@ class MainWindow(QMainWindow, Ui_AppTime):
             element.setText(1, total_time)
             apps_list_usage.append(element)
         self.appsTimeTable.addTopLevelItems(apps_list_usage)
-
 
     def update_(self):
         self.featDate.setText(self.chosenDate.strftime('%d %B %Y'))
