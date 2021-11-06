@@ -249,13 +249,13 @@
             </layout>
            </item>
            <item>
-            <widget class="PlotWidget" name="graphicsView">
+            <widget class="QWidget" name="graphicWidget" native="true">
              <property name="enabled">
               <bool>true</bool>
              </property>
              <property name="minimumSize">
               <size>
-               <width>400</width>
+               <width>500</width>
                <height>250</height>
               </size>
              </property>
@@ -399,13 +399,6 @@
    </widget>
   </widget>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>PlotWidget</class>
-   <extends>QGraphicsView</extends>
-   <header>pyqtgraph</header>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

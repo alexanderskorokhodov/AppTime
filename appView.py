@@ -1,8 +1,8 @@
 import sqlite3
 import sys
 
-from PyQt5.QtCore import QTime, pyqtSlot
-from PyQt5.QtGui import QIcon
+from PyQt5.QtCore import QTime
+from PyQt5.QtGui import QIcon, QPainter, QColor
 from PyQt5.QtWidgets import QApplication, QMainWindow, QDialog, QErrorMessage, QMessageBox, QHBoxLayout, QLabel, \
     QTreeWidgetItem
 
@@ -54,6 +54,7 @@ class LimitsDialog(QDialog, Ui_LimitsDialog):
 class MainWindow(QMainWindow, Ui_AppTime):
     def __init__(self):
         super().__init__()
+        self.total_week = []
         self.setupUi(self)
         self.connection = sqlite3.connect("./AppTime_db.sqlite")
         self.chosenDate = datetime.date.today()
@@ -88,6 +89,16 @@ class MainWindow(QMainWindow, Ui_AppTime):
         self.chosenDate = datetime.date.today()
         self.update_window()
 
+    def paintEvent(self, a0):
+        qp = QPainter()
+        qp.begin(self)
+        # qp.setBrush(QColor(255, 255, 255))
+        qp.setBrush(QColor(162, 167, 207))
+        if self.total_week:
+            for day in range(7):
+                qp.drawRect(200 + day * 70 + 5, 350, 60, -self.total_week[day])
+        qp.end()
+
     def show_data(self, apps_usage, total_week):
         for_day = sum(apps_usage.values())
         hours = int(for_day // 3600)
@@ -116,6 +127,8 @@ class MainWindow(QMainWindow, Ui_AppTime):
             element.setText(0, app_name)
             element.setText(1, total_time)
             self.appsTimeTable.addTopLevelItem(element)
+        self.total_week = process_week_data(total_week)
+        self.repaint()
 
     def update_window(self):
         self.featDate.setText(self.chosenDate.strftime('%d %B %Y'))
@@ -181,20 +194,11 @@ class MainWindow(QMainWindow, Ui_AppTime):
 
 def process_week_data(total_week):
     upper_bound = max(total_week) * 1.25
+    if upper_bound == 0:
+        return total_week
     coefficient = upper_bound / 250
-    total_week = list(map(lambda x: int(x * coefficient), total_week))
+    total_week = list(map(lambda x: int(x / coefficient), total_week))
     return total_week
-
-
-def get_week_plot(total_week):
-    total_week = process_week_data(total_week)
-    x = [coord for coord in range(12, 502)]
-    y = []
-    for day in range(7):
-        y.extend([0 for _ in range(10)])
-        y.extend([total_week[day] for _ in range(50)])
-        y.extend([0 for _ in range(10)])
-    return x, y
 
 
 if __name__ == '__main__':
