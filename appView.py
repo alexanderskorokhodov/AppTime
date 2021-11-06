@@ -63,61 +63,63 @@ class MainWindow(QMainWindow, Ui_AppTime):
         self.limitsButton.clicked.connect(self.show_limits_dialog)
         self.downtimeButton.clicked.connect(self.show_downtime_dialog)
         self.updateButton.clicked.connect(
-            lambda: self.update_() or QMessageBox.about(self, "Update", "It's up to date"))
+            lambda: self.update_window() or QMessageBox.about(self, "Update", "It's up to date"))
         self.todayButton.clicked.connect(self.today_button_clicked)
         self.leftButton.clicked.connect(self.left_button_clicked)
         self.rightButton.clicked.connect(self.right_button_clicked)
-        self.update_()
+        self.update_window()
 
     def left_button_clicked(self):
         if self.weekdayBox.currentText() == 'day':
             self.chosenDate -= datetime.timedelta(days=1)
-            self.update_()
+            self.update_window()
         else:
             self.chosenDate -= datetime.timedelta(days=7)
-            self.update_()
+            self.update_window()
 
     def right_button_clicked(self):
         if self.weekdayBox.currentText() == 'day':
             if self.chosenDate != datetime.date.today():
                 self.chosenDate += datetime.timedelta(days=1)
-                self.update_()
+                self.update_window()
         else:
             self.chosenDate = min(datetime.timedelta(days=7) + self.chosenDate, datetime.date.today())
-            self.update_()
+            self.update_window()
 
     def today_button_clicked(self):
         self.chosenDate = datetime.date.today()
-        self.update_()
+        self.update_window()
 
     def show_data(self, apps_usage):
         for_day = sum(apps_usage.values())
         hours = int(for_day // 3600)
         minutes = int(for_day // 60 - hours * 60)
+        # show data on labels
         if hours:
             self.totalLabel.setText(f"Всего: {hours} ч. {minutes} мин.")
         elif minutes:
             self.totalLabel.setText(f"Всего: {minutes} мин.")
         else:
             self.totalLabel.setText(f"Всего: {int(for_day - hours * 3600 - minutes * 60)} сек.")
+        # set up lowest table
         self.appsTimeTable.clear()
         for item in reversed(sorted(apps_usage.items(), key=lambda x: (x[1], x[0]))):
             app_name, total_time = item[0], item[1]
             hours = int(total_time // 3600)
             minutes = int(total_time // 60 - hours * 60)
             if hours:
-                total_time = f"Всего: {hours} ч. {minutes} мин."
+                total_time = f"{hours} ч. {minutes} мин."
             elif minutes:
-                total_time = f"Всего: {minutes} мин."
+                total_time = f"{minutes} мин."
             else:
-                total_time = f"Всего: {int(total_time - hours * 3600 - minutes * 60)} сек."
+                total_time = f"{int(total_time - hours * 3600 - minutes * 60)} сек."
             print(app_name, total_time)
             element = QTreeWidgetItem(self.appsTimeTable)
             element.setText(0, app_name)
             element.setText(1, total_time)
             self.appsTimeTable.addTopLevelItem(element)
 
-    def update_(self):
+    def update_window(self):
         self.featDate.setText(self.chosenDate.strftime('%d %B %Y'))
         # QMessageBox.about(self, "Update", "It's up to date")
         if self.weekdayBox.currentText() == 'day':
