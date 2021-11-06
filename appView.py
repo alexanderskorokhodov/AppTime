@@ -101,7 +101,6 @@ class MainWindow(QMainWindow, Ui_AppTime):
         else:
             self.totalLabel.setText(f"Всего: {int(for_day - hours * 3600 - minutes * 60)} сек.")
         self.appsTimeTable.clear()
-        apps_list_usage = []
         for item in reversed(sorted(apps_usage.items(), key=lambda x: (x[1], x[0]))):
             app_name, total_time = item[0], item[1]
             hours = int(total_time // 3600)
@@ -116,8 +115,7 @@ class MainWindow(QMainWindow, Ui_AppTime):
             element = QTreeWidgetItem(self.appsTimeTable)
             element.setText(0, app_name)
             element.setText(1, total_time)
-            apps_list_usage.append(element)
-        self.appsTimeTable.addTopLevelItems(apps_list_usage)
+            self.appsTimeTable.addTopLevelItem(element)
 
     def update_(self):
         self.featDate.setText(self.chosenDate.strftime('%d %B %Y'))
@@ -128,7 +126,6 @@ class MainWindow(QMainWindow, Ui_AppTime):
             total_week, apps_usage = self.get_week_info(self.chosenDate)
             print(total_week, apps_usage)
         self.show_data(apps_usage)
-
 
     def show_limits_dialog(self):
         self.setEnabled(False)
@@ -156,7 +153,6 @@ class MainWindow(QMainWindow, Ui_AppTime):
                 day_apps_usage[this_day_app_usage[0]] = this_day_app_usage[1]
         return day_apps_usage
 
-
     def get_week_info(self, day):
         monday = day - datetime.timedelta(days=day.weekday())
         total_week = []
@@ -180,7 +176,6 @@ class MainWindow(QMainWindow, Ui_AppTime):
                             else this_day_app_usage[this_day_app_usage[0]] + this_day_app_usage[1]
                     total_week[-1] += this_day_app_usage[1]
         return total_week, apps_usage
-
 
     def closeEvent(self, a0) -> None:
         self.connection.close()
