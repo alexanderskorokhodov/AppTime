@@ -79,55 +79,16 @@
          <item>
           <layout class="QHBoxLayout" name="updateLayout">
            <item>
-            <spacer name="horizontalSpacer">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>40</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item>
             <widget class="QPushButton" name="updateButton">
              <property name="text">
               <string>Обновить</string>
              </property>
             </widget>
            </item>
-           <item>
-            <spacer name="horizontalSpacer_2">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>40</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
           </layout>
          </item>
          <item>
           <layout class="QHBoxLayout" name="downtimeLayout">
-           <item>
-            <spacer name="horizontalSpacer_6">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>40</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
            <item>
             <widget class="QPushButton" name="downtimeButton">
              <property name="text">
@@ -135,55 +96,16 @@
              </property>
             </widget>
            </item>
-           <item>
-            <spacer name="horizontalSpacer_7">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>40</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
           </layout>
          </item>
          <item>
           <layout class="QHBoxLayout" name="limitsLayout">
-           <item>
-            <spacer name="horizontalSpacer_8">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>40</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
            <item>
             <widget class="QPushButton" name="limitsButton">
              <property name="text">
               <string>Лимиты</string>
              </property>
             </widget>
-           </item>
-           <item>
-            <spacer name="horizontalSpacer_9">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>40</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
            </item>
           </layout>
          </item>
@@ -307,7 +229,7 @@
                 </size>
                </property>
                <property name="text">
-                <string>Обшее время: </string>
+                <string>Всего: </string>
                </property>
               </widget>
              </item>
@@ -431,7 +353,7 @@
       </layout>
      </item>
      <item>
-      <widget class="QListWidget" name="appsTimeTable">
+      <widget class="QTreeWidget" name="appsTimeTable">
        <property name="enabled">
         <bool>true</bool>
        </property>
@@ -441,6 +363,37 @@
          <height>16777215</height>
         </size>
        </property>
+       <property name="layoutDirection">
+        <enum>Qt::LeftToRight</enum>
+       </property>
+       <property name="alternatingRowColors">
+        <bool>false</bool>
+       </property>
+       <property name="headerHidden">
+        <bool>false</bool>
+       </property>
+       <attribute name="headerVisible">
+        <bool>true</bool>
+       </attribute>
+       <attribute name="headerCascadingSectionResizes">
+        <bool>false</bool>
+       </attribute>
+       <attribute name="headerDefaultSectionSize">
+        <number>350</number>
+       </attribute>
+       <attribute name="headerHighlightSections">
+        <bool>false</bool>
+       </attribute>
+       <column>
+        <property name="text">
+         <string>Название</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Время</string>
+        </property>
+       </column>
       </widget>
      </item>
     </layout>

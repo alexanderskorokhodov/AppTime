@@ -1,8 +1,9 @@
+import sqlite3
 import sys
 
 from PyQt5.QtCore import QTime, pyqtSlot
 from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QApplication, QMainWindow, QDialog, QErrorMessage, QMessageBox
+from PyQt5.QtWidgets import QApplication, QMainWindow, QDialog, QErrorMessage, QMessageBox, QHBoxLayout, QLabel, QTreeWidgetItem
 
 from AppTimeUI import Ui_AppTime
 from LimitsUI import Ui_LimitsDialog
@@ -55,12 +56,13 @@ class MainWindow(QMainWindow, Ui_AppTime):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
+        self.connection = sqlite3.connect("./AppTime_db.sqlite")
         self.chosenDate = datetime.date.today()
         self.featDate.setText(self.chosenDate.strftime('%d %B %Y'))
         self.limitsButton.clicked.connect(self.show_limits_dialog)
         self.downtimeButton.clicked.connect(self.show_downtime_dialog)
         self.updateButton.clicked.connect(
-            lambda: QMessageBox.about(self, "Update", "It's up to date") and self.update_())
+            lambda: self.update_() or QMessageBox.about(self, "Update", "It's up to date"))
         self.todayButton.clicked.connect(self.today_button_clicked)
         self.leftButton.clicked.connect(self.left_button_clicked)
         self.rightButton.clicked.connect(self.right_button_clicked)
@@ -74,7 +76,7 @@ class MainWindow(QMainWindow, Ui_AppTime):
             self.update_()
 
     def right_button_clicked(self):
-        if self.weekdayBox.currentData() == 'day':
+        if self.weekdayBox.currentText() == 'day':
             if self.chosenDate != datetime.date.today():
                 self.chosenDate += datetime.timedelta(days=1)
                 self.update_()
@@ -86,9 +88,39 @@ class MainWindow(QMainWindow, Ui_AppTime):
         self.chosenDate = datetime.date.today()
         self.update_()
 
+    def show_data(self, apps_usage):
+        for_day = sum(apps_usage.values())
+        hours = int(for_day // 3600)
+        minutes = int(for_day // 60 - hours * 60)
+        if hours:
+            self.totalLabel.setText(f"Всего: {hours} ч. {minutes} мин.")
+        else:
+            self.totalLabel.setText(f"Всего: {minutes} мин.")
+        self.appsTimeTable.clear()
+        apps_list_usage = []
+        for item in reversed(sorted(apps_usage.items(), key=lambda x: (x[1], x[0]))):
+            app_name, total_time = item[0], item[1]
+            hours = int(total_time // 3600)
+            minutes = int(total_time // 60 - hours * 60)
+            if hours:
+                total_time = f"Всего: {hours} ч. {minutes} мин."
+            else:
+                total_time = f"Всего: {minutes} мин."
+            print(app_name, total_time)
+            element = QTreeWidgetItem(self.appsTimeTable)
+            element.setText(0, app_name)
+            element.setText(1, total_time)
+            apps_list_usage.append(element)
+        self.appsTimeTable.addTopLevelItems(apps_list_usage)
+
+
     def update_(self):
         self.featDate.setText(self.chosenDate.strftime('%d %B %Y'))
         # QMessageBox.about(self, "Update", "It's up to date")
+        if self.weekdayBox.currentText() == 'day':
+            app_usage = self.get_day_info(self.chosenDate)
+            self.show_data(app_usage)
+
         pass  # update frames
 
     def show_limits_dialog(self):
@@ -100,6 +132,25 @@ class MainWindow(QMainWindow, Ui_AppTime):
         self.setEnabled(False)
         dialog_window = DownTimeDialog(self)
         dialog_window.exec_()
+
+    def get_day_info(self, day):
+        day_id = self.connection.cursor().execute(
+            f"""SELECT id FROM days WHERE day_name='{day.strftime("%Y-%m-%d")}'""").fetchone()
+        if not day_id:
+            return {}
+        day_id = day_id[0]
+        app_time_ids = self.connection.cursor().execute(
+            f"""SELECT app_time_id FROM apps_time WHERE day_id={day_id}""").fetchall()
+        day_apps_usage = {}
+        for app_time_id in app_time_ids:
+            this_day_app_usage = self.connection.cursor().execute(
+                f"""SELECT app_name, time FROM app_time WHERE id={app_time_id[0]}""").fetchone()
+            if this_day_app_usage:
+                day_apps_usage[this_day_app_usage[0]] = this_day_app_usage[1]
+        return day_apps_usage
+
+    def closeEvent(self, a0) -> None:
+        self.connection.close()
 
 
 if __name__ == '__main__':
