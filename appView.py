@@ -125,7 +125,6 @@ class MainWindow(QMainWindow, Ui_AppTime):
                 total_time = f"{minutes} мин."
             else:
                 total_time = f"{int(total_time - hours * 3600 - minutes * 60)} сек."
-            print(app_name, total_time)
             element = QTreeWidgetItem(self.appsTimeTable)
             element.setText(0, app_name)
             element.setText(1, total_time)
