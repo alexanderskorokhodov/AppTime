@@ -70,13 +70,17 @@ def write_appdata_to_db():
             del apps_time[i[0]]
             write_apps.remove(i[0])
     for i in write_apps:
-        id = cur.execute('''SELECT id FROM app_time ORDER BY id DESC LIMIT 1''').fetchone()[0]
+        id = cur.execute('''SELECT id FROM app_time ORDER BY id DESC LIMIT 1''').fetchone()
+        if id is None:
+            id = 0
+        else:
+            id = id[0]
         cur.execute(
             f"""INSERT INTO app_time(id, app_name, time) VALUES({id + 1}, '{i}', {apps_time[i]})""")
         cur.execute(f"""INSERT INTO apps_time(app_time_id, day_id) VALUES({id + 1},
         (SELECT id FROM days WHERE day_name = '{today_date}'))""")
         con.commit()
-        cur.execute(f"""UPDATE app_time SET time = time + {apps_time[i[0]]} WHERE id in 
+        cur.execute(f"""UPDATE app_time SET time = time + {apps_time[i]} WHERE id in 
                 (SELECT app_time_id FROM apps_time WHERE day_id = 
                 (SELECT id FROM days WHERE day_name = '{today_date}')) AND app_name = '\\all'""")
         con.commit()
@@ -117,9 +121,9 @@ def check_limits(able_notification=True):
                 limits_done.append(i[0])
 
 
-path_to_db = 'AppTime_db.sqlite'  # path to DateBase
-path_to_icon = 'appIcon.ico'  # path to icon of app
-path_to_update_limits_file = 'UpdateLimits.txt'  # if the first line of file is '1',
+path_to_db = '../../Downloads/Telegram Desktop/test_AppTime (3)/AppTime_db.sqlite'  # path to DateBase
+path_to_icon = '../../Downloads/Telegram Desktop/test_AppTime (3)/appIcon.ico'  # path to icon of app
+path_to_update_limits_file = '../../Downloads/Telegram Desktop/test_AppTime (3)/UpdateLimits.txt'  # if the first line of file is '1',
 # then limits updates, on default it is empty file
 
 apps_time = {'\\all': 0}

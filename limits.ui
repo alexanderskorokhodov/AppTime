@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>398</width>
-    <height>311</height>
+    <height>344</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,7 +19,7 @@
      <x>10</x>
      <y>10</y>
      <width>381</width>
-     <height>291</height>
+     <height>331</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="LimitsLayout">
@@ -30,7 +30,24 @@
      <enum>QLayout::SetDefaultConstraint</enum>
     </property>
     <item>
-     <widget class="QColumnView" name="limitsView"/>
+     <widget class="QTreeWidget" name="limitsView">
+      <attribute name="headerDefaultSectionSize">
+       <number>180</number>
+      </attribute>
+      <attribute name="headerMinimumSectionSize">
+       <number>180</number>
+      </attribute>
+      <column>
+       <property name="text">
+        <string>app name</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>time</string>
+       </property>
+      </column>
+     </widget>
     </item>
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -59,6 +76,13 @@
      <widget class="QPushButton" name="addLimitButton">
       <property name="text">
        <string>Add Limit</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="removeLimitButton">
+      <property name="text">
+       <string>Remove limit</string>
       </property>
      </widget>
     </item>

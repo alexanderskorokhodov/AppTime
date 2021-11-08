@@ -4,7 +4,7 @@ import sys
 from PyQt5.QtCore import QTime
 from PyQt5.QtGui import QIcon, QPainter, QColor
 from PyQt5.QtWidgets import QApplication, QMainWindow, QDialog, QErrorMessage, QMessageBox, QHBoxLayout, QLabel, \
-    QTreeWidgetItem
+    QTreeWidgetItem, QTreeWidget
 
 from AppTimeUI import Ui_AppTime
 from LimitsUI import Ui_LimitsDialog
@@ -36,15 +36,77 @@ class DownTimeDialog(QDialog, Ui_downTimeDialog):
 
 
 class LimitsDialog(QDialog, Ui_LimitsDialog):
-    def __init__(self, parent=None):
+    def __init__(self, parent=None, connection=None):
         self._parent = parent
+        self.connection = connection
+        self.apps = self.connection.cursor().execute(f"""SELECT DISTINCT app_name FROM app_time""").fetchall()
+        self.connection.commit()
+        self.apps = ['all'] + list(map(lambda x: x[0], self.apps))
+        self.limits = self.connection.cursor().execute(f"""SELECT id, app_name, time FROM limits""").fetchall()
         super().__init__(parent)
         self.setupUi(self)
-        # get limits from db
-
+        for i, app_name in enumerate(self.apps):
+            self.chooseAppLimitBox.addItem(app_name, i)
+        self.show_limits()
         self.okLimitsButton.clicked.connect(self.ok_pressed)
+        self.removeLimitButton.clicked.connect(self.delete_limit)
+        self.addLimitButton.clicked.connect(self.add_limit)
+
+    def add_limit(self):
+        app_name = self.chooseAppLimitBox.currentText()
+        app_time = list(map(int, self.chooseTimeLimit.text().split(':')))
+        app_time = app_time[0] * 3600 + app_time[1] * 60
+        if app_name == 'all':
+            app_name = '\\' + app_name
+        if app_name not in list(map(lambda x: x[1], self.limits)):
+            if app_time > 0:
+                self.limits.append((len(self.limits), app_name, app_time))
+                self.show_limits()
+            else:
+                QMessageBox.about(self, "Error", "Time limit can't be zero!")
+        else:
+            QMessageBox.about(self, "Error", "You have this app limit!")
+
+    def delete_limit(self):
+        if self.limits:
+            ind = self.limitsView.currentIndex().row()
+            item = QTreeWidget.invisibleRootItem(self.limitsView).takeChild(ind)
+            app_time = item.text(1)
+            if app_time.endswith(' ч.'):
+                app_time = float(app_time[:-3]) * 3600
+            elif ' ч.' in app_time:
+                app_time = app_time[:-5].split('ч. ')
+                app_time = float(app_time[0]) * 3600 + float(app_time[1]) * 60
+            else:
+                app_time = float(app_time[:-5]) * 60
+            item = (item.text(0), app_time)
+            for i in self.limits:
+                if i[1:] == item:
+                    self.limits.remove(i)
+
+    def show_limits(self):
+        self.limitsView.clear()
+        for limit in self.limits[::-1]:
+            app_name = limit[1]
+            hours, minutes = int(limit[2] // 3600), int(limit[2] % 3600) // 60
+            if hours and minutes:
+                app_time = f"{hours} ч. {minutes} мин."
+            elif hours:
+                app_time = f"{hours} ч."
+            else:
+                app_time = f'{minutes} мин.'
+            element = QTreeWidgetItem(self.limitsView)
+            element.setText(0, app_name)
+            element.setText(1, app_time)
+            self.limitsView.addTopLevelItem(element)
 
     def ok_pressed(self):
+        self.connection.cursor().execute("""DELETE FROM limits""")
+        self.connection.commit()
+        self.connection.cursor().executemany("""INSERT INTO limits (id, app_name, time) VALUES (?, ?, ?);""", self.limits)
+        self.connection.commit()
+        with open(file="UpdateLimits.txt", mode='r') as updateFile:
+            updateFile.write('1')
         self.close()
 
     def closeEvent(self, a0):
@@ -146,7 +208,7 @@ class MainWindow(QMainWindow, Ui_AppTime):
 
     def show_limits_dialog(self):
         self.setEnabled(False)
-        dialog_window = LimitsDialog(self)
+        dialog_window = LimitsDialog(self, self.connection)
         dialog_window.exec_()
 
     def show_downtime_dialog(self):
