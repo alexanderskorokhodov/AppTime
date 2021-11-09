@@ -103,9 +103,11 @@ class LimitsDialog(QDialog, Ui_LimitsDialog):
     def ok_pressed(self):
         self.connection.cursor().execute("""DELETE FROM limits""")
         self.connection.commit()
-        self.connection.cursor().executemany("""INSERT INTO limits (id, app_name, time) VALUES (?, ?, ?);""", self.limits)
-        self.connection.commit()
-        with open(file="UpdateLimits.txt", mode='r') as updateFile:
+        print(self.limits)
+        if self.limits:
+            self.connection.cursor().executemany("""INSERT INTO limits (id, app_name, time) VALUES (?, ?, ?);""", self.limits)
+            self.connection.commit()
+        with open(file="UpdateLimits.txt", mode='w') as updateFile:
             updateFile.write('1')
         self.close()
 
@@ -128,6 +130,7 @@ class MainWindow(QMainWindow, Ui_AppTime):
         self.todayButton.clicked.connect(self.today_button_clicked)
         self.leftButton.clicked.connect(self.left_button_clicked)
         self.rightButton.clicked.connect(self.right_button_clicked)
+        self.downtimeButton.hide()
         self.update_window()
 
     def left_button_clicked(self):
