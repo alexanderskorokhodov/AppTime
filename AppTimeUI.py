@@ -106,6 +106,7 @@ class Ui_AppTime(object):
         self.graphicWidget.setObjectName("graphicWidget")
         self.statsLayout.addWidget(self.graphicWidget)
         self.weekDays = QtWidgets.QHBoxLayout()
+        self.weekDays.setContentsMargins(14, -1, 0, -1)
         self.weekDays.setObjectName("weekDays")
         self.mondayLabel = QtWidgets.QLabel(self.verticalLayoutWidget)
         self.mondayLabel.setObjectName("mondayLabel")
