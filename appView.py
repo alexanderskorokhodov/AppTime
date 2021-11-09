@@ -1,5 +1,6 @@
 import sqlite3
 import sys
+from encodings.punycode import selective_find
 
 from PyQt5.QtCore import QTime
 from PyQt5.QtGui import QIcon, QPainter, QColor
@@ -82,6 +83,7 @@ class LimitsDialog(QDialog, Ui_LimitsDialog):
             item = (item.text(0), app_time)
             for i in self.limits:
                 if i[1:] == item:
+                    print(1)
                     self.limits.remove(i)
 
     def show_limits(self):
@@ -210,9 +212,25 @@ class MainWindow(QMainWindow, Ui_AppTime):
         total_week, apps_usage = self.get_week_info(self.chosenDate)
         if self.weekdayBox.currentText() == 'day':
             apps_usage = self.get_day_info(self.chosenDate)
+            try:
+                prev = self.get_day_info(self.chosenDate - datetime.timedelta(days=1))
+                if prev:
+                    percs = int(apps_usage["\\all"] / prev["\\all"] * 100 - 100)
+                    self.differenceLabel.setText(f"Разница с прошлым днем {percs}%")
+            except:
+                self.differenceLabel.setText(f"Разница с прошлым днем -%")
+        else:
+            try:
+                _, prev = self.get_week_info(self.chosenDate - datetime.timedelta(days=7))
+                if prev:
+                    percs = int(apps_usage["\\all"] / prev["\\all"] * 100 - 100)
+                    self.differenceLabel.setText(f"Разница с прошлой неделей {percs}%")
+            except:
+                self.differenceLabel.setText(f"Разница с прошлой неделей -%")
         self.show_data(apps_usage, total_week)
         for day in self.week_days[:self.chosenDate.weekday()] + self.week_days[self.chosenDate.weekday() + 1:]:
             day.setEnabled(False)
+
 
     def show_limits_dialog(self):
         self.setEnabled(False)
@@ -257,11 +275,14 @@ class MainWindow(QMainWindow, Ui_AppTime):
             for app_time_id in app_time_ids:
                 this_day_app_usage = self.connection.cursor().execute(
                     f"""SELECT app_name, time FROM app_time WHERE id={app_time_id[0]}""").fetchone()
+                if this_day_app_usage[0] == "\\all":
+                    total_week[-1] = this_day_app_usage[1]
+                    continue
                 if this_day_app_usage:
                     apps_usage[this_day_app_usage[0]] = \
                         this_day_app_usage[1] if this_day_app_usage[0] not in apps_usage \
                             else apps_usage[this_day_app_usage[0]] + this_day_app_usage[1]
-                    total_week[-1] += this_day_app_usage[1]
+
         return total_week, apps_usage
 
     def closeEvent(self, a0) -> None:
