@@ -1,11 +1,9 @@
 import sqlite3
 import sys
-from encodings.punycode import selective_find
 
-from PyQt5.QtCore import QTime, Qt
+from PyQt5.QtCore import QTime
 from PyQt5.QtGui import QIcon, QPainter, QColor
-from PyQt5.QtWidgets import QApplication, QMainWindow, QDialog, QErrorMessage, QMessageBox, QHBoxLayout, QLabel, \
-    QTreeWidgetItem, QTreeWidget
+from PyQt5.QtWidgets import QApplication, QMainWindow, QDialog, QMessageBox, QTreeWidgetItem, QTreeWidget
 
 from AppTimeUI import Ui_AppTime
 from LimitsUI import Ui_LimitsDialog
@@ -101,12 +99,12 @@ class LimitsDialog(QDialog, Ui_LimitsDialog):
             element.setText(1, app_time)
             self.limitsView.addTopLevelItem(element)
 
-
     def ok_pressed(self):
         self.connection.cursor().execute("""DELETE FROM limits""")
         self.connection.commit()
         if self.limits:
-            self.connection.cursor().executemany("""INSERT INTO limits (id, app_name, time) VALUES (?, ?, ?);""", self.limits)
+            self.connection.cursor().executemany("""INSERT INTO limits (id, app_name, time) VALUES (?, ?, ?);""",
+                                                 self.limits)
             self.connection.commit()
         with open(file="UpdateLimits.txt", mode='w') as updateFile:
             updateFile.write('1')
@@ -121,7 +119,8 @@ class MainWindow(QMainWindow, Ui_AppTime):
         super().__init__()
         self.total_week = []
         self.setupUi(self)
-        self.week_days = [self.mondayLabel, self.tuesdayLabel, self.wednesdayLabel, self.thursdayLabel, self.fridayLabel, self.saturdayLabel, self.sundayLabel]
+        self.week_days = [self.mondayLabel, self.tuesdayLabel, self.wednesdayLabel, self.thursdayLabel,
+                          self.fridayLabel, self.saturdayLabel, self.sundayLabel]
         self.connection = sqlite3.connect("./AppTime_db.sqlite")
         self.chosenDate = datetime.date.today()
         self.featDate.setText(self.chosenDate.strftime('%d %B %Y'))
@@ -235,7 +234,6 @@ class MainWindow(QMainWindow, Ui_AppTime):
         self.show_data(apps_usage, total_week)
         for day in self.week_days[:self.chosenDate.weekday()] + self.week_days[self.chosenDate.weekday() + 1:]:
             day.setEnabled(False)
-
 
     def show_limits_dialog(self):
         self.setEnabled(False)
