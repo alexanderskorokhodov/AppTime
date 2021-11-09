@@ -12,20 +12,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>721</width>
-    <height>734</height>
+    <width>760</width>
+    <height>760</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>700</width>
-    <height>725</height>
+    <width>760</width>
+    <height>760</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>536365</width>
-    <height>6575858</height>
+    <width>760</width>
+    <height>761</height>
    </size>
   </property>
   <property name="baseSize">
@@ -40,14 +40,14 @@
   <widget class="QWidget" name="centralwidget">
    <property name="minimumSize">
     <size>
-     <width>721</width>
-     <height>724</height>
+     <width>760</width>
+     <height>761</height>
     </size>
    </property>
    <property name="maximumSize">
     <size>
-     <width>721</width>
-     <height>724</height>
+     <width>760</width>
+     <height>760</height>
     </size>
    </property>
    <widget class="QWidget" name="verticalLayoutWidget">
@@ -55,8 +55,8 @@
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>696</width>
-      <height>714</height>
+      <width>731</width>
+      <height>731</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="mainLayout">
@@ -367,6 +367,12 @@
        </property>
        <property name="lineWidth">
         <number>1</number>
+       </property>
+       <property name="autoScroll">
+        <bool>false</bool>
+       </property>
+       <property name="editTriggers">
+        <set>QAbstractItemView::DoubleClicked</set>
        </property>
        <property name="alternatingRowColors">
         <bool>false</bool>

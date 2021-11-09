@@ -83,7 +83,6 @@ class LimitsDialog(QDialog, Ui_LimitsDialog):
             item = (item.text(0), app_time)
             for i in self.limits:
                 if i[1:] == item:
-                    print(1)
                     self.limits.remove(i)
 
     def show_limits(self):
@@ -102,10 +101,10 @@ class LimitsDialog(QDialog, Ui_LimitsDialog):
             element.setText(1, app_time)
             self.limitsView.addTopLevelItem(element)
 
+
     def ok_pressed(self):
         self.connection.cursor().execute("""DELETE FROM limits""")
         self.connection.commit()
-        print(self.limits)
         if self.limits:
             self.connection.cursor().executemany("""INSERT INTO limits (id, app_name, time) VALUES (?, ?, ?);""", self.limits)
             self.connection.commit()
@@ -135,11 +134,11 @@ class MainWindow(QMainWindow, Ui_AppTime):
         self.downtimeButton.hide()
         self.update_window()
 
-    def keyPressEvent(self, a0):
-        if a0.key() == Qt.Key_Left:
-            self.left_button_clicked()
-        elif a0.key() == Qt.Key_Right:
-            self.right_button_clicked()
+    # def keyPressEvent(self, a0):
+    #     if a0.key() == Qt.Key_Left:
+    #         self.left_button_clicked()
+    #     elif a0.key() == Qt.Key_Right:
+    #         self.right_button_clicked()
 
     def left_button_clicked(self):
         if self.weekdayBox.currentText() == 'day':
@@ -172,7 +171,7 @@ class MainWindow(QMainWindow, Ui_AppTime):
                     qp.setBrush(QColor(26, 36, 117))
                 else:
                     qp.setBrush(QColor(162, 167, 207))
-                qp.drawRect(200 + day * 70 + 5, 310, 60, -self.total_week[day])
+                qp.drawRect(245 + day * 70, 330, 60, -self.total_week[day])
         qp.end()
 
     def show_data(self, apps_usage, total_week):
