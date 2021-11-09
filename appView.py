@@ -2,7 +2,7 @@ import sqlite3
 import sys
 from encodings.punycode import selective_find
 
-from PyQt5.QtCore import QTime
+from PyQt5.QtCore import QTime, Qt
 from PyQt5.QtGui import QIcon, QPainter, QColor
 from PyQt5.QtWidgets import QApplication, QMainWindow, QDialog, QErrorMessage, QMessageBox, QHBoxLayout, QLabel, \
     QTreeWidgetItem, QTreeWidget
@@ -42,7 +42,7 @@ class LimitsDialog(QDialog, Ui_LimitsDialog):
         self.connection = connection
         self.apps = self.connection.cursor().execute(f"""SELECT DISTINCT app_name FROM app_time""").fetchall()
         self.connection.commit()
-        self.apps = ['all'] + list(map(lambda x: x[0], self.apps))
+        self.apps = list(map(lambda x: x[0], self.apps))
         self.limits = self.connection.cursor().execute(f"""SELECT id, app_name, time FROM limits""").fetchall()
         super().__init__(parent)
         self.setupUi(self)
@@ -134,6 +134,12 @@ class MainWindow(QMainWindow, Ui_AppTime):
         self.rightButton.clicked.connect(self.right_button_clicked)
         self.downtimeButton.hide()
         self.update_window()
+
+    def keyPressEvent(self, a0):
+        if a0.key() == Qt.Key_Left:
+            self.left_button_clicked()
+        elif a0.key() == Qt.Key_Right:
+            self.right_button_clicked()
 
     def left_button_clicked(self):
         if self.weekdayBox.currentText() == 'day':
