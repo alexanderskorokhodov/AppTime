@@ -168,7 +168,10 @@ class MainWindow(QMainWindow, Ui_AppTime):
         qp.end()
 
     def show_data(self, apps_usage, total_week):
-        for_day = sum(apps_usage.values())
+        try:
+            for_day = apps_usage['\\all']
+        except:
+            for_day = 0
         hours = int(for_day // 3600)
         minutes = int(for_day // 60 - hours * 60)
         # show data on labels
@@ -182,6 +185,8 @@ class MainWindow(QMainWindow, Ui_AppTime):
         self.appsTimeTable.clear()
         for item in reversed(sorted(apps_usage.items(), key=lambda x: (x[1], x[0]))):
             app_name, total_time = item[0], item[1]
+            if app_name == '\\all':
+                continue
             hours = int(total_time // 3600)
             minutes = int(total_time // 60 - hours * 60)
             if hours:
@@ -255,7 +260,7 @@ class MainWindow(QMainWindow, Ui_AppTime):
                 if this_day_app_usage:
                     apps_usage[this_day_app_usage[0]] = \
                         this_day_app_usage[1] if this_day_app_usage[0] not in apps_usage \
-                            else this_day_app_usage[this_day_app_usage[0]] + this_day_app_usage[1]
+                            else apps_usage[this_day_app_usage[0]] + this_day_app_usage[1]
                     total_week[-1] += this_day_app_usage[1]
         return total_week, apps_usage
 
