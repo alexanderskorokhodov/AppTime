@@ -170,7 +170,7 @@ class MainWindow(QMainWindow, Ui_AppTime):
                     qp.setBrush(QColor(26, 36, 117))
                 else:
                     qp.setBrush(QColor(162, 167, 207))
-                qp.drawRect(230 + day * 70, 330, 60, -self.total_week[day])
+                qp.drawRect(240 + day * 70, 330, 60, -self.total_week[day])
         qp.end()
 
     def show_data(self, apps_usage, total_week):
