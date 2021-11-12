@@ -130,7 +130,6 @@ class MainWindow(QMainWindow, Ui_AppTime):
         self.todayButton.clicked.connect(self.today_button_clicked)
         self.leftButton.clicked.connect(self.left_button_clicked)
         self.rightButton.clicked.connect(self.right_button_clicked)
-        self.downtimeButton.hide()
         self.update_window()
 
     # def keyPressEvent(self, a0):
@@ -175,7 +174,10 @@ class MainWindow(QMainWindow, Ui_AppTime):
 
     def show_data(self, apps_usage, total_week):
         try:
-            for_day = apps_usage['\\all']
+            if self.weekdayBox.currentText() == 'day':
+                for_day = apps_usage['\\all']
+            else:
+                for_day = sum(total_week)
         except:
             for_day = 0
         hours = int(for_day // 3600)

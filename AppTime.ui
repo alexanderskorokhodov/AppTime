@@ -133,7 +133,7 @@
              <property name="minimumSize">
               <size>
                <width>90</width>
-               <height>0</height>
+               <height>20</height>
               </size>
              </property>
              <property name="maximumSize">
@@ -159,7 +159,7 @@
              <property name="minimumSize">
               <size>
                <width>40</width>
-               <height>0</height>
+               <height>22</height>
               </size>
              </property>
              <property name="maximumSize">
@@ -178,7 +178,7 @@
              <property name="minimumSize">
               <size>
                <width>31</width>
-               <height>0</height>
+               <height>22</height>
               </size>
              </property>
              <property name="maximumSize">
@@ -197,7 +197,7 @@
              <property name="minimumSize">
               <size>
                <width>40</width>
-               <height>0</height>
+               <height>22</height>
               </size>
              </property>
              <property name="maximumSize">
@@ -331,22 +331,8 @@
        <item>
         <widget class="QLabel" name="showLabel">
          <property name="text">
-          <string>Показать:</string>
+          <string>Приложения:</string>
          </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QComboBox" name="appCatBox">
-         <item>
-          <property name="text">
-           <string>Приложения</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Категории</string>
-          </property>
-         </item>
         </widget>
        </item>
       </layout>
